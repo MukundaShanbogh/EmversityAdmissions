@@ -1,4 +1,6 @@
 [
+  "Test_case/test_login.py::TestAdmissionsPage::test_Complete_form_fill",
   "Test_case/test_login.py::TestAdmissionsPage::test_choose_centre_Form",
+  "Test_case/test_login.py::TestAdmissionsPage::test_choose_centre_Program",
   "Test_case/test_login.py::TestAdmissionsPage::test_login"
 ]

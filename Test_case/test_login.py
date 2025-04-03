@@ -2,6 +2,7 @@ import time
 from Page_object.admissionsPage import AdmissionsPage
 from Utilities.BaseClass import BaseClass
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 class TestAdmissionsPage(BaseClass):
     # will login and assert the successful login.
@@ -35,5 +36,26 @@ class TestAdmissionsPage(BaseClass):
             assert programText == "Please choose a Program", "text did not match"
             admission.get_enroll_now().click()
 
+        except Exception as e:
+            print(f"Test failed due to :{e}")
+    
+    def test_Complete_form_fill(self):
+        try:
+            last_name = admission.get_last_name_input()
+            last_name.send_keys(Keys.CONTROL+"a")
+            last_name.send_keys(Keys.BACKSPACE)
+            last_name.send_keys("testing")
+            input_filed = admission.get_email_address_input()
+            input_filed.send_keys(Keys.CONTROL + "a")
+            input_filed.send_keys(Keys.BACKSPACE)
+            input_filed.send_keys("testing@gmail.com")
+            admission.get_DOB().click()
+            time.sleep(1)
+            admission.get_year_btn().click()
+            admission.get_select_year().click()
+            admission.get_ok_btn().click()
+            admission.get_gender().click()
+            admission.get_next_btn().click()
+            time.sleep(4)
         except Exception as e:
             print(f"Test failed due to :{e}")

@@ -1,0 +1,6 @@
+to run the scripts user should install selenium,pytest 
+to run all the scripts the command is py.test -v-s to get the verbos 
+there are 3 functions 
+the 1st one will login the user 
+the 2nd will select the centre and the program 
+the 3rd will fill the complete form 

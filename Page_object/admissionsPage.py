@@ -17,6 +17,11 @@ class AdmissionsPage:
     DOB = (By.XPATH,"//*[text()='Date of Birth']/parent::div/parent::div//input")
     gender = (By.XPATH,"//*[text()='Male']")
     next_btn = (By.XPATH,"//*[text()='Next']")
+    year_btn = (By.XPATH,"(//*[@role='presentation'])[3]//button")
+    select_year = (By.XPATH,"//*[text()='1997']")
+    ok_btn = (By.XPATH,"//*[text()='OK']")
+    yes_btn = (By.XPATH,"//*[text()='Yes']")
+    no_btn = (By.XPATH,"//*[text()='No']")
 
 
     def get_number_field(self):
@@ -58,6 +63,22 @@ class AdmissionsPage:
     def get_next_btn(self):
         return self.driver.find_element (*AdmissionsPage.next_btn)
     
+    def get_year_btn(self):
+        return self.driver.find_element(*AdmissionsPage.year_btn)
+    
+    def get_select_year(self):
+        return self.driver.find_element(*AdmissionsPage.select_year)
+    
+    def get_ok_btn(self):
+        return self.driver.find_element(*AdmissionsPage.ok_btn)
+    
+    def get_yes_btn(self):
+        return self.driver.find_element(*AdmissionsPage.yes_btn)
+    
+    def get_no_btn(self):
+        return self.driver.find_element(*AdmissionsPage.no_btn)
+    
+
     
 
     
