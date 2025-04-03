@@ -1,0 +1,4 @@
+[
+  "Test_case/test_login.py::TestAdmissionsPage::test_choose_centre_Form",
+  "Test_case/test_login.py::TestAdmissionsPage::test_login"
+]
