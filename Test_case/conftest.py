@@ -4,7 +4,7 @@ from selenium import webdriver
 
 @pytest.fixture(scope="class")
 def setup(request):
-    url = "https://testdev.emversity.com/"
+    url = request.param
     driver = webdriver.Chrome()
     driver.maximize_window()
     driver.implicitly_wait(10)

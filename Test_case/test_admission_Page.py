@@ -1,29 +1,36 @@
 import time
-from Page_object.admissionsPage import AdmissionsPage
+
+import pytest
+from Page_object.admission_page.admissionsPage import AdmissionsPage
 from Utilities.BaseClass import BaseClass
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+
 
 class TestAdmissionsPage(BaseClass):
-    # will login and assert the successful login.
-    def test_login(self):
+    # the code below will login and assert the successful login of a user .
+    @pytest.mark.parametrize("setup", ["https://testdev.emversity.com/"], indirect=True)
+    def test_login(self,setup):
         try:
-            number = "7975697137"
+            number = "7975697137" #this is the number of the user
             global admission 
-            admission =AdmissionsPage(self.driver)
-            admission.get_number_field().send_keys(number)
+            admission =AdmissionsPage(self.driver,setup) #create the Object for the Page object
+            admission.get_number_field().send_keys(number) 
             admission.get_SignIn_btn().click()
             otpField = admission.get_otp_field()
             for i in (otpField):
                 i.send_keys('1')
             admission.get_submit_btn().click()
             choose_centre_text=admission.get_chooseCentreTXT().text
-            assert choose_centre_text == "Please choose a","text did not match"
+            assert choose_centre_text == "Please choose a Centre","text did not match"
 
         except Exception as e:
-            print(f"Test failed due to: {e}") 
+            f"Test failed due to: {e}"
             
-    # this will be choosing the centre "Mukunda teaches testing centre".
+    # the code below will be choosing the centre "Mukunda teaches testing centre".
     def test_choose_centre_Program(self):
         try:
             centre = admission.get_centre_name()
@@ -37,8 +44,9 @@ class TestAdmissionsPage(BaseClass):
             admission.get_enroll_now().click()
 
         except Exception as e:
-            print(f"Test failed due to :{e}")
-    
+            f"Test failed due to :{e}"
+
+    #  the code below will be filling the complete form 
     def test_Complete_form_fill(self):
         try:
             last_name = admission.get_last_name_input()
@@ -50,12 +58,19 @@ class TestAdmissionsPage(BaseClass):
             input_filed.send_keys(Keys.BACKSPACE)
             input_filed.send_keys("testing@gmail.com")
             admission.get_DOB().click()
-            time.sleep(1)
             admission.get_year_btn().click()
             admission.get_select_year().click()
             admission.get_ok_btn().click()
             admission.get_gender().click()
             admission.get_next_btn().click()
-            time.sleep(4)
+            admission.get_next_btn().click()
+            admission.get_yes_btn().click()
+            admission.get_next_btn().click()
+            work_exp_text = admission.get_work_exp().text
+            if work_exp_text == "Please specify your work experience":
+                admission.get_years_select().click()
+            wait = WebDriverWait(self.driver,10)
+            relegion_text = wait.until(EC.visibility_of_element_located((admission.get_relegion)))
+            
         except Exception as e:
-            print(f"Test failed due to :{e}")
+            f"Test failed due to :{e}"
