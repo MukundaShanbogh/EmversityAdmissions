@@ -17,7 +17,7 @@ class TestAdmissionsPage(BaseClass):
         try:
             number = "7975697137" #this is the number of the user
             global admission 
-            admission =AdmissionsPage(self.driver,setup) #create the Object for the Page object
+            admission =AdmissionsPage(self.driver) #create the Object for the Page object
             admission.get_number_field().send_keys(number) 
             admission.get_SignIn_btn().click()
             otpField = admission.get_otp_field()
