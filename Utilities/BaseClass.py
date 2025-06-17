@@ -1,9 +1,12 @@
+import datetime
 import random
 import string
 import pytest
 from spellchecker import SpellChecker
 from selenium.webdriver.common.by import By
 import pandas as pd
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 @pytest.mark.usefixtures("setup")
@@ -50,9 +53,36 @@ class BaseClass:
         print(f"Misspelled words: {misspelled}")
         return misspelled
 
-
     def get_urls_from_gsheet(base_url, csv_url):
         df = pd.read_csv(csv_url)
         paths = df.iloc[:, 0].dropna().tolist()  # assuming path is in first column
         full_urls = [base_url.rstrip("/") + "/" + path.lstrip("/") for path in paths]
         return full_urls
+    
+    def get_current_time():
+        """Get current time in HH:MM format"""
+        return datetime.datetime.now().strftime("%H:%M")
+
+    def get_day_name():
+        """Get current day number (0-6, where 0 is Sunday)"""
+        return datetime.datetime.now().weekday()
+
+    def calculate_time_range():
+        """Calculate start and end time based on current time"""
+        current_hour = datetime.datetime.now().hour
+        start_time = f"{current_hour:02d}:00"
+        end_time = f"{current_hour + 1:02d}:00"
+        return start_time, end_time
+
+    def get_row_number(current_time):
+        """Get row number based on current time"""
+        hour = int(current_time.split(":")[0])
+        if 8 <= hour < 20:
+            return hour - 8
+        return None
+    
+    def wait_for_element_visibility(driver, element):
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of(element))
+        
+
