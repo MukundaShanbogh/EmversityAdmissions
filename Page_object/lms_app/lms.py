@@ -18,6 +18,23 @@ class lms_elements:
     quiz_options = (By.XPATH,"//*[@type='button']")
     number_of_quiz_questions_text = (By.XPATH,"(//p[text()])[3]")
     refer_student = (By.XPATH,"(//*[text()='Refer your friends to Emversity,'])")
+    help_assistance_btn = (By.XPATH,"//*[text()='Get Assistance']")
+    discribe_issue_text = (By.XPATH,"//*[text()='Describe your issue']")
+    issue_subject = (By.XPATH,"//*[@placeholder='Subject']")
+    issue_details = (By.XPATH,"//*[@placeholder='Details']")
+    issue_submit_btn = (By.XPATH,"//*[text()='Submit']")
+    issue_thank_you_text = (By.XPATH,"//*[contains(text(),'Thank you')]")
+    issue_ticket_ID = (By.XPATH,"//*[contains(text(),'Your Ticket ID')]")
+    profile_section = (By.XPATH,"//*[text()='Profile']")
+    raise_concern = (By.XPATH,"//*[text()='Raise a concern']")
+    older_ticket_list = (By.XPATH,"(//*[text()='Older Tickets']/parent::div/child::div)[2]//div[contains(text(),'Ticket ID')]")
+
+
+
+
+
+
+
 
 
 
@@ -57,5 +74,38 @@ class lms_elements:
     
     def get_refer_student(self):
         return self.driver.find_element(*lms_elements.refer_student)
+
+    def get_help_assistance_btn(self):
+        return self.driver.find_element(*lms_elements.help_assistance_btn)
+    
+    def get_discribe_issue_text(self):
+        return self.driver.find_element(*lms_elements.discribe_issue_text)
+    
+    def get_issue_subject(self):
+        return self.driver.find_element(*lms_elements.issue_subject)
+    
+    def get_issue_details(self):
+        return self.driver.find_element(*lms_elements.issue_details)
+    
+    def get_issue_submit_btn(self):
+        return self.driver.find_element(*lms_elements.issue_submit_btn)
+    
+    def get_issue_thank_you_text(self):
+        return self.driver.find_element(*lms_elements.issue_thank_you_text)
+    
+    def get_issue_ticket_ID(self):
+        return self.driver.find_element(*lms_elements.issue_ticket_ID)
+    
+    def get_profile_section(self):
+        return self.driver.find_element(*lms_elements.profile_section)
+    
+    def get_raise_concern(self):
+        return self.driver.find_element(*lms_elements.raise_concern)
+    
+    def get_older_ticket_list(self):
+        return self.driver.find_elements(*lms_elements.older_ticket_list)
+    
+
+    
 
 

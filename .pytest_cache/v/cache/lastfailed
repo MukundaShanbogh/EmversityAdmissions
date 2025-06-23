@@ -128,8 +128,6 @@
   "Test_case/test_create_Lead.py::Test_landing_page::test_program_page[https://dev2.emversity.com/programs/bsc-ott-course-presidency-bengaluru]": true,
   "Test_case/test_create_Lead.py::Test_landing_page::test_program_page[https://dev2.emversity.com/programs/bsc-respiratory-care-course-presidency-bengaluru]": true,
   "Test_case/test_create_Lead.py::Test_landing_page::test_program_page[https://dev2.emversity.com/programs/bsc-cardiac-care-technology-course-presidency-bengaluru]": true,
-  "Test_case/test_tv_app.py::TestSchedule": true,
-  "Test_case/test_tv_app.py::TestTVApp": true,
   "Test_case/test_admission_Page.py::TestAdmissionsPage::test_login[https://testdev.emversity.com/]": true,
   "Test_case/test_admission_Page.py::TestAdmissionsPage::test_choose_centre_Program[https://testdev.emversity.com/]": true,
   "Test_case/test_admission_Page.py::TestAdmissionsPage::test_Complete_form_fill[https://testdev.emversity.com/]": true

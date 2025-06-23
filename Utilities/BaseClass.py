@@ -84,5 +84,12 @@ class BaseClass:
     def wait_for_element_visibility(driver, element):
         wait = WebDriverWait(driver, 10)
         wait.until(EC.visibility_of(element))
+    
+    def wait_for_element_clickable(driver,element):
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.element_to_be_clickable(element))
+    
+    def scroll_to_element(driver,element):
+        driver.execute_script("arguments[0].scrollIntoView(true);", element)
         
 

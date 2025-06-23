@@ -11,6 +11,7 @@ def setup(request):
     if driver is None:
         options = Options()
         options.add_argument("--use-fake-ui-for-media-stream")
+        options.add_argument("--ignore-certificate-errors")
         driver = webdriver.Chrome(options=options)
         driver.maximize_window()
         driver.implicitly_wait(10)

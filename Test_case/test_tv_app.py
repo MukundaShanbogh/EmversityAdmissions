@@ -66,21 +66,21 @@ class TestTVApp(BaseClass):
                 try:
                     schedule_dt = datetime.strptime(schedule_time, "%I:%M %p")
                     schedule_hour = schedule_dt.hour
-                    print(f"current_hour: {current_hour}, schedule_hour: {schedule_hour}, schedule_time: {schedule_time}")
+                    # print(f"current_hour: {current_hour}, schedule_hour: {schedule_hour}, schedule_time: {schedule_time}")
                     
                     if current_hour == schedule_hour or (current_hour + 1) == schedule_hour:
                         i.click()
                         schedule_found = True
                         break
                 except ValueError as ve:
-                    print(f"Could not parse time: {schedule_time}, error: {str(ve)}")
+                    # print(f"Could not parse time: {schedule_time}, error: {str(ve)}")
                     continue
                     
             if not schedule_found:
                 pytest.skip("No matching schedule found for current time")
             
-            time.sleep(1)  # Give time for session button to be clickable
             start_session_btn = TestTVApp.app.get_start_session_btn()
+            BaseClass.wait_for_element_visibility(self.driver,start_session_btn)
             start_session_btn.click()
             
         except Exception as e:
@@ -93,20 +93,17 @@ class TestTVApp(BaseClass):
             # Switch to TV app tab
             self.driver.switch_to.window(TestSchedule.tv_app_tab_handle)
             
-            # Wait for quiz button to be clickable
-            time.sleep(1)  # Give time for quiz button to be clickable
-            
             quiz_btn = TestTVApp.app.get_quiz_btn()
+            BaseClass.wait_for_element_clickable(self.driver,quiz_btn)
             quiz_btn.click()
             # Wait for quiz ready text
             time.sleep(1)  # Give time for quiz ready text to appear
             try:
                 ready_for_quiz_txt = TestTVApp.app.get_ready_for_quiz_txt()
                 if ready_for_quiz_txt.text != "Ready for the Quiz?":
-                    pytest.skip("Quiz not ready")
+                    pytest.fail("Quiz not ready")
             except:
-                pytest.skip("Quiz ready text not found")
-            
+                pytest.fail("Quiz ready text not found")
             # Start quiz
             quiz_start_btn = TestTVApp.app.get_start_session_btn()
             quiz_start_btn.click()
