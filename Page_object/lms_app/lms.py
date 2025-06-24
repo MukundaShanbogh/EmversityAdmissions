@@ -28,6 +28,15 @@ class lms_elements:
     profile_section = (By.XPATH,"//*[text()='Profile']")
     raise_concern = (By.XPATH,"//*[text()='Raise a concern']")
     older_ticket_list = (By.XPATH,"(//*[text()='Older Tickets']/parent::div/child::div)[2]//div[contains(text(),'Ticket ID')]")
+    book_session_home_btn = (By.XPATH,"//*[contains(text(),'Session')]")
+    select_teacher_text = (By.XPATH,"//*[text()='Select a Teacher']")
+    tutor_name_text = (By.XPATH,"(//p[text()])[1]")
+    time_slots = (By.XPATH,"//*[text()='Time Slot']/parent::div/parent::div//button")
+    session_booked_successful = (By.XPATH,"//*[text()='Session Booked Successfully!']")
+    return_to_dashboard = (By.XPATH,"//*[text()='Return to Dashboard']")
+
+
+
 
 
 
@@ -104,6 +113,24 @@ class lms_elements:
     
     def get_older_ticket_list(self):
         return self.driver.find_elements(*lms_elements.older_ticket_list)
+    
+    def get_book_session_home_btn(self):
+        return self.driver.find_element(*lms_elements.book_session_home_btn)
+    
+    def get_select_teacher_text(self):
+        return self.driver.find_element(*lms_elements.select_teacher_text)
+    
+    def get_tutor_name_text(self):
+        return self.driver.find_element(*lms_elements.tutor_name_text)
+    
+    def get_time_slots(self):
+        return self.driver.find_elements(*lms_elements.time_slots)
+    
+    def get_session_booked_successful(self):
+        return self.driver.find_element(*lms_elements.session_booked_successful)
+    
+    def get_return_to_dashboard(self):
+        return self.driver.find_element(*lms_elements.return_to_dashboard)
     
 
     

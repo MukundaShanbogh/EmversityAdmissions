@@ -93,6 +93,7 @@ class Test_lms_accessibility(BaseClass):
 class Test_lms_Dashboard(BaseClass):
     erplocators = None
     ticket_id = None
+
     def test_student_login(self):
         Test_lms_accessibility.lms_obj = lms_elements(self.driver)
         Test_lms_accessibility.tv_app_obj = tv_app(self.driver)
@@ -124,7 +125,7 @@ class Test_lms_Dashboard(BaseClass):
             # Click verify OTP
             Test_lms_accessibility.lms_obj.get_verify_otp_btn().click()
     
-
+    # it will create the ticket and verify it on the ERP
     def test_help_support(self):
         Test_lms_Dashboard.erplocators = erp_elements(self.driver)
         actions = ActionChains(self.driver)
@@ -162,6 +163,7 @@ class Test_lms_Dashboard(BaseClass):
         erp_ticket_ID = Test_lms_Dashboard.erplocators.get_erp_ticket_ID().text
         assert erp_ticket_ID == Test_lms_Dashboard.ticket_id ,"did not get the ticket-ID in erp"
     
+    #  this method will update the status of the ticket to resolved and it will verify in the lms.
     def test_resolved_status(self):
         Test_lms_Dashboard.erplocators.get_resolved_status().click()
         time.sleep(.5)
@@ -184,13 +186,25 @@ class Test_lms_Dashboard(BaseClass):
 
 
 
+    def test_book_session(self):
+        self.driver.get("https://lmsdev.emversity.com/home")
+        time.sleep(1)
+        Test_lms_accessibility.lms_obj.get_book_session_home_btn().click()
+        select_teacher_page = Test_lms_accessibility.lms_obj.get_select_teacher_text().text
+        assert select_teacher_page == 'Select a Teacher'
+        try:
+            Test_lms_accessibility.lms_obj.get_book_session_home_btn().click()
+            tutor_name = Test_lms_accessibility.lms_obj.get_tutor_name_text().text
+            print(f"the tutor name for the session booked is: {tutor_name}")
+            time_slot = Test_lms_accessibility.lms_obj.get_time_slots()
+            time_slot = random.choice(time_slot)
+            time_slot.click()
+            # check if the time is selected
+            Test_lms_accessibility.lms_obj.get_book_session_home_btn().click()
+            successful_msg = Test_lms_accessibility.lms_obj.get_session_booked_successful().text
+            assert successful_msg == 'Session Booked Successfully!'
 
+            Test_lms_accessibility.lms_obj.get_return_to_dashboard.click()
 
-
-
-
-            
-        
-
-       
-       
+        except:
+            pytest.fail("tutor has not been assigned to this centre or class")
