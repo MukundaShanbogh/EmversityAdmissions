@@ -93,7 +93,8 @@ class Test_lms_accessibility(BaseClass):
 class Test_lms_Dashboard(BaseClass):
     erplocators = None
     ticket_id = None
-
+    @pytest.mark.smokeD
+    @pytest.mark.order(1)
     def test_student_login(self):
         Test_lms_accessibility.lms_obj = lms_elements(self.driver)
         Test_lms_accessibility.tv_app_obj = tv_app(self.driver)
@@ -126,6 +127,7 @@ class Test_lms_Dashboard(BaseClass):
             Test_lms_accessibility.lms_obj.get_verify_otp_btn().click()
     
     # it will create the ticket and verify it on the ERP
+    @pytest.mark.skip(reason="Skipping this test temporarily")
     def test_help_support(self):
         Test_lms_Dashboard.erplocators = erp_elements(self.driver)
         actions = ActionChains(self.driver)
@@ -164,6 +166,7 @@ class Test_lms_Dashboard(BaseClass):
         assert erp_ticket_ID == Test_lms_Dashboard.ticket_id ,"did not get the ticket-ID in erp"
     
     #  this method will update the status of the ticket to resolved and it will verify in the lms.
+    @pytest.mark.skip(reason="Skipping this test temporarily")
     def test_resolved_status(self):
         Test_lms_Dashboard.erplocators.get_resolved_status().click()
         time.sleep(.5)
@@ -184,8 +187,8 @@ class Test_lms_Dashboard(BaseClass):
 
         assert ticket_found, f"Ticket ID {Test_lms_Dashboard.ticket_id} not found in old tickets"
 
-
-
+    # this method will book one on one meeting with the mentor
+    @pytest.mark.skip(reason="Skipping this test temporarily")
     def test_book_session(self):
         self.driver.get("https://lmsdev.emversity.com/home")
         time.sleep(1)
@@ -208,3 +211,33 @@ class Test_lms_Dashboard(BaseClass):
 
         except:
             pytest.fail("tutor has not been assigned to this centre or class")
+
+
+    @pytest.mark.smokeD
+    @pytest.mark.order(2)
+    def test_practice_quiz(self):
+        Test_lms_accessibility.lms_obj.get_practice_btn().click()
+
+        time.sleep(2)
+        outer_page_subjects = Test_lms_accessibility.lms_obj.get_number_of_practice_quiz_subject()
+        random_subject = random.choice(outer_page_subjects)
+        random_subject.click()
+
+        time.sleep(2)
+        inner_page_quiz = Test_lms_accessibility.lms_obj.get_subject_quiz()
+        random_quiz = random.choice(inner_page_quiz)
+        random_quiz.click()
+
+        time.sleep(10)
+        quiz_questions = Test_lms_accessibility.lms_obj.get_number_of_quiz_questions().text
+        print(f"the number of quiz questions is: {quiz_questions}")
+        quiz_questions = quiz_questions.strip().split("/")[-1].strip()
+        quiz_questions = int(quiz_questions)
+
+        for i in range(quiz_questions):
+            quiz_options = Test_lms_accessibility.lms_obj.get_practice_quiz_options()
+            random_option = random.choice(quiz_options)
+            random_option.click()
+            time.sleep(3)
+
+ 

@@ -19,7 +19,7 @@ class BaseClass:
     
     def random_phone_number():
         first_digit = random.choice(['6', '7', '8', '9'])  # valid starting digits
-        remaining_digits = ''.join(random.choices('0123456789', k=9))
+        remaining_digits = ''.join(random.choices('0123456789', k=9 ))
         return first_digit + remaining_digits
     
     

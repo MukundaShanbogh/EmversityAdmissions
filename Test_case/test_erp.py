@@ -7,7 +7,6 @@ from Utilities.BaseClass import BaseClass
 @pytest.mark.usefixtures("setup")
 class TestSchedule(BaseClass):
     dev_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6Im11a3VuZGEuc3JAZW12ZXJzaXR5LmNvbSIsImlhdCI6MTc0ODM0MjM3MywiZXhwIjoxNzUwOTM0MzczfQ.O8Tca9srY8gSyqwTXbs486p1FVUvoYjmyzXLJjMRFJ8'
-    prod_token = ''
     domain = '.emversity.com'
     erp_tab_handle = None
     tv_app_tab_handle = None

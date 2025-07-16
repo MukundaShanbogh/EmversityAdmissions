@@ -34,13 +34,12 @@ class lms_elements:
     time_slots = (By.XPATH,"//*[text()='Time Slot']/parent::div/parent::div//button")
     session_booked_successful = (By.XPATH,"//*[text()='Session Booked Successfully!']")
     return_to_dashboard = (By.XPATH,"//*[text()='Return to Dashboard']")
+    practice_btn = (By.XPATH,"//*[text()='Practice']")
+    number_of_practice_quiz_subject = (By.XPATH,"//div[@size='6']") #(this will get the subjects on the outer page)
+    subject_quiz = (By.XPATH,"//p[text()]/parent::div") #(this will get quiz with in the selected subject add this as elements)
+    practice_quiz_options = (By.XPATH,"((//div[text()])/parent::div)[4]/child::div")
 
-
-
-
-
-
-
+    number_of_quiz_questions = (By.XPATH,"(//span[text()])[2]")
 
 
 
@@ -132,6 +131,20 @@ class lms_elements:
     def get_return_to_dashboard(self):
         return self.driver.find_element(*lms_elements.return_to_dashboard)
     
+    def get_practice_btn(self):
+        return self.driver.find_element(*lms_elements.practice_btn)
+    
+    def get_number_of_practice_quiz_subject(self):
+        return self.driver.find_elements(*lms_elements.number_of_practice_quiz_subject)
+    
+    def get_subject_quiz(self):
+        return self.driver.find_elements(*lms_elements.subject_quiz)
+    
+    def get_practice_quiz_options(self):
+        return self.driver.find_elements(*lms_elements.practice_quiz_options)
+    
+    def get_number_of_quiz_questions(self):
+        return self.driver.find_element(*lms_elements.number_of_quiz_questions)
 
     
 
