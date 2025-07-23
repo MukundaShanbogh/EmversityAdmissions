@@ -4,6 +4,7 @@ from Page_object.admission_page.admissionsPage import AdmissionsPage
 from Utilities.BaseClass import BaseClass
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from API_lms.test_lead_creat import lead_create
 
 
 @pytest.mark.parametrize("setup", ["https://testdev.emversity.com/"], indirect=True, scope="class")
@@ -18,7 +19,8 @@ class TestAdmissionsPage(BaseClass):
     # @pytest.mark.parametrize("setup", ["https://testdev.emversity.com/"], indirect=True)
     def test_login(self):
         try:
-            number = "7975697137" #this is the number of the user
+            number = lead_create.generate_random_phone_number()
+            print(number)
             global admission 
             admission =AdmissionsPage(self.driver) #create the Object for the Page object
             admission.get_number_field().send_keys(number) 

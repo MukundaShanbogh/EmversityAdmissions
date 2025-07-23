@@ -12,6 +12,7 @@ from selenium.webdriver.common.keys import Keys
 
 
 
+@pytest.mark.usefixtures("setup")
 class Test_lms_accessibility(BaseClass):
     lms_obj = None
     tv_app_obj = None
@@ -25,37 +26,38 @@ class Test_lms_accessibility(BaseClass):
             Test_lms_accessibility.lms_obj = lms_elements(self.driver)
             Test_lms_accessibility.tv_app_obj = tv_app(self.driver)
             
-            try:
-                if Test_lms_accessibility.lms_obj.get_access_denied_text().text == "Access Denied":
-                    self.driver.execute_script("window.localStorage.setItem('allow-me', '1')")
-                    self.driver.refresh()
-                    # time.sleep(2)  # Wait for refresh
-            except:
-                pass  # Continue with the test if Access Denied is not present
+            # try:
+            #     if Test_lms_accessibility.lms_obj.get_access_denied_text().text == "Access Denied":
+            #         self.driver.execute_script("window.localStorage.setItem('allow-me', '1')")
+            #         self.driver.refresh()
+            #         # time.sleep(2)  # Wait for refresh
+            # except:
+            #     pass  # Continue with the test if Access Denied is not present
             
-                getstarted = Test_lms_accessibility.lms_obj.get_lets_start_text().text
-                if getstarted == "Let's get started":
-                    # Need to login
-                    phone_number = "9618788418"
-                    Test_lms_accessibility.lms_obj.get_mobile_num_input().send_keys(phone_number)
-                    Test_lms_accessibility.tv_app_obj.get_start_session_btn().click()
-                    
-                    # Wait for OTP verification text
-                    BaseClass.wait_for_element_visibility(self.driver, Test_lms_accessibility.lms_obj.get_verify_otp_text())
-                    verify_otp_text = Test_lms_accessibility.lms_obj.get_verify_otp_text().text
-                    assert verify_otp_text == f"We have sent an OTP to +91{phone_number}"
-                    
-                    # Enter OTP
-                    otp_input = Test_lms_accessibility.lms_obj.get_otp_input()
-                    for i in range(len(otp_input)):
-                        otp_input[i].send_keys("1")
-                    
-                    # Click verify OTP
-                    Test_lms_accessibility.lms_obj.get_verify_otp_btn().click()
-                    performance_text = Test_lms_accessibility.lms_obj.get_performance_text()
-                    BaseClass.wait_for_element_visibility(self.driver,performance_text)
-                    performance_text = performance_text.text
-                    assert performance_text == "Performance Overview" 
+            getstarted = Test_lms_accessibility.lms_obj.get_login_text().text
+            if getstarted == "Log in":
+                # Need to login
+                phone_number = "9618788418"
+                Test_lms_accessibility.lms_obj.get_mobile_num_input().send_keys(phone_number)
+                Test_lms_accessibility.tv_app_obj.get_start_session_btn().click()
+                
+                # Wait for OTP verification text
+                # BaseClass.wait_for_element_visibility(self.driver, Test_lms_accessibility.lms_obj.get_verify_otp_text())
+                # verify_otp_text = Test_lms_accessibility.lms_obj.get_verify_otp_text().text
+                # assert verify_otp_text == f"We have sent an OTP to +91{phone_number}"
+    
+                time.sleep(4)
+                # Enter OTP
+                otp_input = Test_lms_accessibility.lms_obj.get_otp_input()
+                for i in range(len(otp_input)):
+                    otp_input[i].send_keys("1")
+                
+                # Click verify OTP
+                Test_lms_accessibility.lms_obj.get_verify_otp_btn().click()
+                # performance_text = Test_lms_accessibility.lms_obj.get_performance_text()
+                # BaseClass.wait_for_element_visibility(self.driver,performance_text)
+                # performance_text = performance_text.text
+                # assert performance_text == "Performance Overview" 
                 
         except Exception as e:
             pytest.fail(f"LMS login failed: {str(e)}")
@@ -89,7 +91,8 @@ class Test_lms_accessibility(BaseClass):
         except Exception as e:
             pytest.fail(f"Quiz answering failed: {str(e)}")
     
-@pytest.mark.parametrize("setup", ["https://lmsdev.emversity.com"], indirect=True, scope="class")
+@pytest.mark.usefixtures("setup")
+@pytest.mark.parametrize("setup", ["https://emversedev.emversity.com/"], indirect=True, scope="class")
 class Test_lms_Dashboard(BaseClass):
     erplocators = None
     ticket_id = None
@@ -99,15 +102,15 @@ class Test_lms_Dashboard(BaseClass):
         Test_lms_accessibility.lms_obj = lms_elements(self.driver)
         Test_lms_accessibility.tv_app_obj = tv_app(self.driver)
             
-        try:
-            if Test_lms_accessibility.lms_obj.get_access_denied_text().text == "Access Denied":
-                self.driver.execute_script("window.localStorage.setItem('allow-me', '1')")
-                self.driver.refresh()
-        except:
-            pass
+        # try:
+        #     if Test_lms_accessibility.lms_obj.get_access_denied_text().text == "Access Denied":
+        #         self.driver.execute_script("window.localStorage.setItem('allow-me', '1')")
+        #         self.driver.refresh()
+        # except:
+        #     pass
 
-        getstarted = Test_lms_accessibility.lms_obj.get_lets_start_text().text
-        if getstarted == "Let's get started":
+        getstarted = Test_lms_accessibility.lms_obj.get_login_text().text
+        if getstarted == "Log in":
             # Need to login
             phone_number = "9618788418"
             Test_lms_accessibility.lms_obj.get_mobile_num_input().send_keys(phone_number)

@@ -6,7 +6,7 @@ from Utilities.BaseClass import BaseClass
 
 @pytest.mark.usefixtures("setup")
 class TestSchedule(BaseClass):
-    dev_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6Im11a3VuZGEuc3JAZW12ZXJzaXR5LmNvbSIsImlhdCI6MTc0ODM0MjM3MywiZXhwIjoxNzUwOTM0MzczfQ.O8Tca9srY8gSyqwTXbs486p1FVUvoYjmyzXLJjMRFJ8'
+    dev_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6Im11a3VuZGEuc3JAZW12ZXJzaXR5LmNvbSIsImlhdCI6MTc1MDkzNTc5MCwiZXhwIjoxNzUzNTI3NzkwfQ.JP3cIsWdj-0F_XTUTjeCQNl9lGAKWJaSlcbInS9pk_g'
     domain = '.emversity.com'
     erp_tab_handle = None
     tv_app_tab_handle = None
@@ -33,7 +33,7 @@ class TestSchedule(BaseClass):
             TestSchedule.tv_app_tab_handle = self.driver.current_window_handle
 
             # Open LMS in new tab
-            self.driver.execute_script("window.open('https://lmsdev.emversity.com', '_blank');")
+            self.driver.execute_script("window.open('https://emversedev.emversity.com/', '_blank');")
             self.driver.switch_to.window(self.driver.window_handles[2])
             TestSchedule.lms_tab_handle = self.driver.current_window_handle
 
@@ -117,14 +117,14 @@ class TestSchedule(BaseClass):
             response = requests.post(url, headers=headers, json=payload)
             
             if response.status_code == 400 and "Cannot book the same section for multiple classes at the same time" in response.text:
-                print("Skipping test as section is already booked")
+                # print("Skipping test as section is already booked")
                 pytest.skip("Section is already booked for this time slot")
             else:
                 # assertion
                 assert response.status_code == 201, f"API request failed with status code: {response.status_code}"
                 response_data = response.json()
                 assert response_data is not None, "API response is empty"
-                print("API Response:", response_data)
+                # print("API Response:", response_data)
 
         except Exception as e:
             pytest.fail(f"Test failed due to: {e}")

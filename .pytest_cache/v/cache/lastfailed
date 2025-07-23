@@ -131,5 +131,9 @@
   "Test_case/test_admission_Page.py::TestAdmissionsPage::test_login[https://testdev.emversity.com/]": true,
   "Test_case/test_admission_Page.py::TestAdmissionsPage::test_choose_centre_Program[https://testdev.emversity.com/]": true,
   "Test_case/test_admission_Page.py::TestAdmissionsPage::test_Complete_form_fill[https://testdev.emversity.com/]": true,
-  "Test_case/test_lms.py::Test_lms_Dashboard::test_practice_quiz[https://lmsdev.emversity.com]": true
+  "Test_case/test_lms.py::Test_lms_Dashboard::test_practice_quiz[https://lmsdev.emversity.com]": true,
+  "Test_case/test_lms.py::Test_lms_Dashboard::test_student_login[https://emversedev.emversity.com/]": true,
+  "Test_case/test_lms.py::Test_lms_Dashboard::test_practice_quiz[https://emversedev.emversity.com/]": true,
+  "Test_case/test_lms.py::Test_lms_accessibility::test_lms_login": true,
+  "Test_case/test_lms.py::Test_lms_accessibility::test_student_quiz_Logic": true
 }

@@ -6,7 +6,7 @@ class lms_elements:
         self.driver = driver
 
 
-    lets_start_text = (By.XPATH,"//*[text()=\"Let's get started\"]")
+    login_text = (By.XPATH,"//*[text()='Log in']")
     mobile_num_input = (By.XPATH,"//*[@placeholder='Mobile Number']")
     verify_otp_text = (By.XPATH,"//*[text()='We have sent an OTP to']")
     otp_input = (By.XPATH,"//*[contains(@aria-label,'Digit')]")
@@ -47,8 +47,8 @@ class lms_elements:
 
 
 
-    def get_lets_start_text(self):
-        return self.driver.find_element(*lms_elements.lets_start_text)
+    def get_login_text(self):
+        return self.driver.find_element(*lms_elements.login_text)
     
     def get_mobile_num_input(self):
         return self.driver.find_element(*lms_elements.mobile_num_input)
