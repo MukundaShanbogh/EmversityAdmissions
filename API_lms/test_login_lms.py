@@ -1,11 +1,11 @@
 import requests
 import json
-import pytest
-
+from datetime import date
 
 
 class Test_login_lms:
     base_url = "https://apidev.emversity.com/"
+    current_day = date.today()
 
     def enter_number(self):
         end_point = "api/v1/auth/otp/send?mode=lms"
@@ -36,7 +36,7 @@ class Test_login_lms:
                 "phoneNumber" : "919618788418"
             }
             response = requests.post(url= url ,headers = headers, json = payload )
-            print("I am the response:",response)
+            assert response.status_code == 200
             return response.json()['result']['token']
         except Exception as e:
             # pytest.fail(e)
@@ -52,7 +52,9 @@ class Test_login_lms:
         }
         response = requests.get(url = url , headers = headers )
         print(f"Student_details: {json.dumps(response.json(), indent = 4)}")
-        return response.json()["data"]["centre_id"]
+        centre_id = response.json()["data"]["centre_id"]
+        student_id = response.json()["data"]["student_id"]
+        return centre_id,student_id
 
     def tutor_details(self,token,center_id):
         end_point = "/api/v1/lms/tutors"
@@ -65,8 +67,31 @@ class Test_login_lms:
         reponse = requests.get(url= url,headers=headers)
         print(f"tutor_details: {json.dumps(reponse.json(),indent=4)}")
 
+    def doubt_slot(self,token,center_id,student_id):
+        end_point = "/api/v1/lms/doubt-session"
+        url = f"{self.base_url}{end_point}"
+        payload = {
+            "student_id": f"{student_id}",
+            "tutor_id": "2",
+            "centre_id": f"{center_id}",
+            "date": f"{self.current_day}",
+            "start_time": "T15:30:00.000Z",
+            "end_time": "T16:00:00.000Z"
+        }
+        headers = {
+            "authorization" : f"Bearer {token}",
+            "content-type"  :  "application/json",
+            "centre-id" : f"{center_id}"
+        }
+
+        response = requests.post(url= url , headers=headers,json=payload)
+        print(json.dumps(response.json(),indent=4))
+
+
+
 login = Test_login_lms()
 berry = login.enter_number()
 token = login.verify_otp(berry)
-centre_id = login.student_login(token)
+centre_id,student_id = login.student_login(token)
 login.tutor_details(token,centre_id)
+login.doubt_slot(token,centre_id,student_id)

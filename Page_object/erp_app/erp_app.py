@@ -12,6 +12,13 @@ class erp_elements:
     confirm_btn = (By.XPATH,"//*[text()='Confirm']")
 
 
+    tutor_management = (By.XPATH,"//*[text()='Tutor Management']")
+    tutor_schedule_btn = (By.XPATH,"//span[text()='Tutor Schedule']")
+    select_center = (By.XPATH,"//label[text()='Please Select Centre']")
+    select_section = (By.XPATH,"//label[text()='Please Select Section']")
+    
+
+
     def get_support_btn(self):
         return self.driver.find_element(*erp_elements.support_btn)
     

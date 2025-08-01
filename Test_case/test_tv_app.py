@@ -13,7 +13,7 @@ class TestTVApp(BaseClass):
     app = None
    
     @pytest.mark.smoke
-    @pytest.mark.order(2)
+    @pytest.mark.order(3)
     def test_tv_app(self):
         TestTVApp.app = tv_app(self.driver)
         try:
@@ -44,9 +44,10 @@ class TestTVApp(BaseClass):
             pytest.fail(f"TV App login failed: {str(e)}")
 
     @pytest.mark.smoke
-    @pytest.mark.order(3)
+    @pytest.mark.order(5)
     def test_acceibility_mode(self):
         try:
+            self.driver.switch_to.window(TestSchedule.tv_app_tab_handle)
             # Wait for schedule to load
             time.sleep(1)  # Give extra time for schedule to load
             
@@ -87,7 +88,7 @@ class TestTVApp(BaseClass):
             pytest.fail(f"Accessibility mode test failed: {str(e)}")
 
     @pytest.mark.smoke
-    @pytest.mark.order(5)
+    @pytest.mark.order(6)
     def test_quiz_start(self):
         try:
             # Switch to TV app tab

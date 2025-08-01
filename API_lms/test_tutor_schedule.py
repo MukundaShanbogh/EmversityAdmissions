@@ -5,57 +5,14 @@ from selenium.webdriver.support import expected_conditions as EC
 import requests
 from Utilities.BaseClass import BaseClass
 
-@pytest.mark.usefixtures("setup")
-class TestSchedule(BaseClass):
-    dev_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6Im11a3VuZGEuc3JAZW12ZXJzaXR5LmNvbSIsImlhdCI6MTc1MzY3NzkzNywiZXhwIjoxNzU2MjY5OTM3fQ._KGFZWsP0u8Yvq6XQi7AgWvH_qK4hVjJAJ31bMAjTNQ'
-    domain = '.emversity.com'
-    erp_tab_handle = None
-    tv_app_tab_handle = None
-    lms_tab_handle = None
-    tutor_handle = None
-    tabs_initialized = False
 
-    @pytest.mark.smoke
-    @pytest.mark.order(0)
-    def test_setup_browser(self):
-        if not TestSchedule.tabs_initialized:
-            # Open ERP
-            self.driver.get("https://erpdev.emversity.com/")
-            TestSchedule.erp_tab_handle = self.driver.current_window_handle
-            
-            self.driver.add_cookie({'name': 'login_token',
-                                    'value': self.dev_token,
-                                    'domain': self.domain,
-                                    'path': '/'})
-            self.driver.get("https://erpdev.emversity.com/dashboard")
+class tutor_schedule(BaseClass):
+    dev_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6Im11a3VuZGEuc3JAZW12ZXJzaXR5LmNvbSIsImlhdCI6MTc1MDkzNTc5MCwiZXhwIjoxNzUzNTI3NzkwfQ.JP3cIsWdj-0F_XTUTjeCQNl9lGAKWJaSlcbInS9pk_g'
 
-            # Open TV app in new tab
-            self.driver.execute_script("window.open('https://tvtutordev.emversity.com/login', '_blank');")
-            self.driver.switch_to.window(self.driver.window_handles[1])
-            TestSchedule.tv_app_tab_handle = self.driver.current_window_handle
-
-            # Open LMS in new tab
-            self.driver.execute_script("window.open('https://emversedev.emversity.com/', '_blank');")
-            self.driver.switch_to.window(self.driver.window_handles[2])
-            TestSchedule.lms_tab_handle = self.driver.current_window_handle
-
-            # open tutor app
-            self.driver.execute_script("window.open('https://tvtutordev.emversity.com/tutor', '_blank');")
-            self.driver.switch_to.window(self.driver.window_handles[3])
-            TestSchedule.tutor_handle = self.driver.current_window_handle
-
-            # Switch back to ERP tab
-            self.driver.switch_to.window(TestSchedule.erp_tab_handle)
-            TestSchedule.tabs_initialized = True
-
-    # @pytest.mark.smoke
-    # @pytest.mark.order(1)
-    @pytest.mark.skip(reason="Used only for internal calls")
     def test_schedule_creation(self):
         try:          
             # Get current date 
             current_date = datetime.datetime.now().strftime("%d-%m-%Y")  # Changed to DD-MM-YYYY format
-            
             # Get current day and calculate column
             current_day = BaseClass.get_day_name()
             if current_day == 6:  # Sunday
@@ -132,16 +89,16 @@ class TestSchedule(BaseClass):
                 assert response.status_code == 201, f"API request failed with status code: {response.status_code}"
                 response_data = response.json()
                 assert response_data is not None, "API response is empty"
-                print(f"im the response data {response_data["data"]}")
+                # print("API Response:", response_data)
+                print(response_data["data"])
             return response_data["data"]
 
         except Exception as e:
             raise
 
-    @pytest.mark.smoke
-    @pytest.mark.order(1)
+
     def test_assign_tutor_schedule(self):
-        object_class = TestSchedule()
+        object_class = tutor_schedule()
         schedule_id = object_class.test_schedule_creation()
         request_url = "https://apidev.emversity.com/api/v1/crm/centre-tutors/add/tutor"
         pay_load ={
@@ -153,4 +110,4 @@ class TestSchedule(BaseClass):
             'content-type': 'application/json'
         }
         response = requests.put(url= request_url , headers= headers , json=pay_load)
-        assert response.status_code == 200
+        print(json.dumps(response.json(),indent=4))

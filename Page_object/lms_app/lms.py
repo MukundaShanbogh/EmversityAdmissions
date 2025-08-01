@@ -15,12 +15,12 @@ class lms_elements:
     upcoming_events_text = (By.XPATH,"//*[text()='Upcoming Events']")
     access_denied_text = (By.XPATH,"//*[text()='Access Denied']")
     performance_text = (By.XPATH,"//*[text()='Performance Overview']")
-    quiz_options = (By.XPATH,"//*[@type='button']")
+    quiz_options = (By.XPATH,"//*[@type='button']//p")
     number_of_quiz_questions_text = (By.XPATH,"(//p[text()])[3]")
     refer_student = (By.XPATH,"(//*[text()='Refer your friends to Emversity,'])")
     help_assistance_btn = (By.XPATH,"//*[text()='Get Assistance']")
-    discribe_issue_text = (By.XPATH,"//*[text()='Describe your issue']")
-    issue_subject = (By.XPATH,"//*[@placeholder='Subject']")
+    new_ticket_btn = (By.XPATH,"//*[text()='New Ticket']")
+    issue_subject = (By.XPATH,"//*[@placeholder='Enter your subject']")
     issue_details = (By.XPATH,"//*[@placeholder='Details']")
     issue_submit_btn = (By.XPATH,"//*[text()='Submit']")
     issue_thank_you_text = (By.XPATH,"//*[contains(text(),'Thank you')]")
@@ -29,19 +29,17 @@ class lms_elements:
     raise_concern = (By.XPATH,"//*[text()='Raise a concern']")
     older_ticket_list = (By.XPATH,"(//*[text()='Older Tickets']/parent::div/child::div)[2]//div[contains(text(),'Ticket ID')]")
     book_session_home_btn = (By.XPATH,"//*[contains(text(),'Session')]")
-    select_teacher_text = (By.XPATH,"//*[text()='Select a Teacher']")
-    tutor_name_text = (By.XPATH,"(//p[text()])[1]")
-    time_slots = (By.XPATH,"//*[text()='Time Slot']/parent::div/parent::div//button")
+    # select_teacher_text = (By.XPATH,"//*[text()='Select a Teacher']")
+    tutor_name_text = (By.XPATH,"//p[contains(text(),'Dr ')]")
+    time_slots = (By.XPATH,"//*[text()='Time Slots']/parent::div/parent::div//button")
     session_booked_successful = (By.XPATH,"//*[text()='Session Booked Successfully!']")
-    return_to_dashboard = (By.XPATH,"//*[text()='Return to Dashboard']")
+    return_to_dashboard = (By.XPATH,"//*[text()='Home']/parent::div//div")
     practice_btn = (By.XPATH,"//*[text()='Practice']")
     number_of_practice_quiz_subject = (By.XPATH,"//div[@size='6']") #(this will get the subjects on the outer page)
     subject_quiz = (By.XPATH,"//p[text()]/parent::div") #(this will get quiz with in the selected subject add this as elements)
     practice_quiz_options = (By.XPATH,"((//div[text()])/parent::div)[4]/child::div")
-
     number_of_quiz_questions = (By.XPATH,"(//span[text()])[2]")
-
-
+    quiz_leader_board = (By.XPATH,"//*[@data-testid='HighlightOffIcon']/parent::div/parent::div/parent::div")
 
 
 
@@ -86,8 +84,8 @@ class lms_elements:
     def get_help_assistance_btn(self):
         return self.driver.find_element(*lms_elements.help_assistance_btn)
     
-    def get_discribe_issue_text(self):
-        return self.driver.find_element(*lms_elements.discribe_issue_text)
+    def get_new_ticket_btn(self):
+        return self.driver.find_element(*lms_elements.new_ticket_btn)
     
     def get_issue_subject(self):
         return self.driver.find_element(*lms_elements.issue_subject)
@@ -116,8 +114,8 @@ class lms_elements:
     def get_book_session_home_btn(self):
         return self.driver.find_element(*lms_elements.book_session_home_btn)
     
-    def get_select_teacher_text(self):
-        return self.driver.find_element(*lms_elements.select_teacher_text)
+    # def get_select_teacher_text(self):
+    #     return self.driver.find_element(*lms_elements.select_teacher_text)
     
     def get_tutor_name_text(self):
         return self.driver.find_element(*lms_elements.tutor_name_text)
@@ -145,6 +143,9 @@ class lms_elements:
     
     def get_number_of_quiz_questions(self):
         return self.driver.find_element(*lms_elements.number_of_quiz_questions)
+    
+    def get_quiz_leader_board(self):
+        return self.driver.find_element(*lms_elements.quiz_leader_board)
 
     
 

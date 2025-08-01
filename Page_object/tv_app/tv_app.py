@@ -18,6 +18,7 @@ class tv_app:
     start_session_btn = (By.XPATH,"//button")
     quiz_btn = (By.XPATH,"//div[text()='Next Topic' or  text()='Quiz']")
     ready_for_quiz_txt = (By.XPATH,"//*[text()='Ready for the Quiz?']")
+    
 
 
     def get_login_input(self):
