@@ -134,6 +134,5 @@
   "Test_case/test_lms.py::Test_lms_Dashboard::test_practice_quiz[https://lmsdev.emversity.com]": true,
   "Test_case/test_lms.py::Test_lms_Dashboard::test_student_login[https://emversedev.emversity.com/]": true,
   "Test_case/test_lms.py::Test_lms_Dashboard::test_practice_quiz[https://emversedev.emversity.com/]": true,
-  "Test_case/test_lms.py::Test_lms_accessibility::test_student_quiz_Logic": true,
   "Test_case/test_tutor_app.py::TestSchedule::test_schedule_creation": true
 }

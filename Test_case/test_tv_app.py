@@ -1,10 +1,9 @@
 import time
 import pytest
 from Page_object.tv_app.tv_app import tv_app
-# from Test_case.test_lms import Test_lms
 from Utilities.BaseClass import BaseClass
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 from datetime import datetime
 from Test_case.test_erp import TestSchedule
 
@@ -95,6 +94,7 @@ class TestTVApp(BaseClass):
             self.driver.switch_to.window(TestSchedule.tv_app_tab_handle)
             
             quiz_btn = TestTVApp.app.get_quiz_btn()
+            ActionChains(self.driver).move_to_element(quiz_btn).perform()
             BaseClass.wait_for_element_clickable(self.driver,quiz_btn)
             quiz_btn.click()
             # Wait for quiz ready text

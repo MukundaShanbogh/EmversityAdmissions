@@ -48,14 +48,11 @@ class TestSchedule(BaseClass):
             self.driver.switch_to.window(TestSchedule.erp_tab_handle)
             TestSchedule.tabs_initialized = True
 
-    # @pytest.mark.smoke
-    # @pytest.mark.order(1)
-    @pytest.mark.skip(reason="Used only for internal calls")
+    @pytest.mark.skip(reason="called this function in test_assign_tutor_schedule function")
     def test_schedule_creation(self):
         try:          
             # Get current date 
-            current_date = datetime.datetime.now().strftime("%d-%m-%Y")  # Changed to DD-MM-YYYY format
-            
+            current_date = datetime.datetime.now().strftime("%d-%m-%Y")  # Changed to DD-MM-YYYY format 
             # Get current day and calculate column
             current_day = BaseClass.get_day_name()
             if current_day == 6:  # Sunday

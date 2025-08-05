@@ -10,6 +10,7 @@ class erp_elements:
     erp_ticket_ID = (By.XPATH,"(//*[text()='Ticket ID']/parent::th/parent::tr/parent::thead/parent::table//p)[1]")
     resolved_status = (By.XPATH,"//*[@type='checkbox']")
     confirm_btn = (By.XPATH,"//*[text()='Confirm']")
+    
 
 
     tutor_management = (By.XPATH,"//*[text()='Tutor Management']")
@@ -33,5 +34,7 @@ class erp_elements:
     
     def get_confirm_btn(self):
         return self.driver.find_element(*erp_elements.confirm_btn)
+    
+    
     
     

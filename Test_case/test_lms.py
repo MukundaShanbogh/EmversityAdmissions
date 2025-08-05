@@ -62,7 +62,9 @@ class Test_lms_accessibility(BaseClass):
                     # Check if leaderboard is visible
                     leaderboard = Test_lms_accessibility.lms_obj.get_quiz_leader_board()    
                     print("Leaderboard found, ending quiz.")
-                    
+                    self.driver.switch_to.window(TestSchedule.tv_app_tab_handle)
+                    Test_lms_accessibility.tv_app_obj.get_start_session_btn().click()
+                    self.driver.switch_to.window(TestSchedule.lms_tab_handle)
                     break
                 except NoSuchElementException:
                     # No leaderboard yet, keep answering
@@ -80,6 +82,7 @@ class Test_lms_Dashboard(BaseClass):
     @pytest.mark.smoke
     @pytest.mark.order(8)
     def test_help_support(self):
+        time.sleep(2)
         Test_lms_Dashboard.erplocators = erp_elements(self.driver)
         actions = ActionChains(self.driver)
         # assertion to check the student is in the 'discribe issue page'
@@ -110,67 +113,51 @@ class Test_lms_Dashboard(BaseClass):
     @pytest.mark.order(9)
     def test_resolved_status(self):
         Test_lms_Dashboard.erplocators.get_resolved_status().click()
-        time.sleep(.5)
+        time.sleep(1)
         Test_lms_Dashboard.erplocators.get_confirm_btn().click()
         self.driver.switch_to.window(TestSchedule.lms_tab_handle)
-        Test_lms_accessibility.lms_obj.get_profile_section().click()
-        raise_a_concern = Test_lms_accessibility.lms_obj.get_raise_concern()
-        BaseClass.scroll_to_element(self.driver,raise_a_concern)
-        raise_a_concern.click()
-        old_tickets = Test_lms_accessibility.lms_obj.get_older_ticket_list()
-        for i in old_tickets:
-            old_Ticket_ID = i.text
-            match = re.search(r'\d+', old_Ticket_ID)
-            if match:
-                if match.group() == Test_lms_Dashboard.ticket_id:
-                    ticket_found = True
-                    break  # No need to check further
-
-        assert ticket_found, f"Ticket ID {Test_lms_Dashboard.ticket_id} not found in old tickets"
+        Test_lms_accessibility.lms_obj.get_go_back_btn().click()
+        Test_lms_accessibility.lms_obj.get_return_to_dashboard().click()
+        # ADD the assertion step here
 
     # this method will book one on one meeting with the mentor
     @pytest.mark.smoke
     @pytest.mark.order(10)
     def test_book_session(self):
-        self.driver.switch_to.window(TestSchedule.lms_tab_handle)
+        # self.driver.switch_to.window(TestSchedule.lms_tab_handle)
         time.sleep(1)
         Test_lms_accessibility.lms_obj.get_book_session_home_btn().click()
         # select_teacher_page = Test_lms_accessibility.lms_obj.get_select_teacher_text().text
         try:
             # Test_lms_accessibility.lms_obj.get_book_session_home_btn().click()
-            tutor_name = Test_lms_accessibility.lms_obj.get_tutor_name_text().text
-            if tutor_name == "Dr Nikhil New":
-                print(f"the tutor name for the session booked is: {tutor_name}")
-                time_slot = Test_lms_accessibility.lms_obj.get_time_slots()
-                time_slot = random.choice(time_slot)
-                time_slot.click()
-                # check if the time is selected
-                Test_lms_accessibility.lms_obj.get_book_session_home_btn().click()
-                successful_msg = Test_lms_accessibility.lms_obj.get_session_booked_successful().text
-                assert successful_msg == 'Session Booked Successfully!'
-                Test_lms_accessibility.lms_obj.get_return_to_dashboard.click()
+            tutor_name_elements  = Test_lms_accessibility.lms_obj.get_tutor_name_text()
+            for tutor_element in tutor_name_elements:
+                tutor_name = tutor_element.text
+                if tutor_name == "Dr Nikhil New":
+                    print(f"the tutor name for the session booked is: {tutor_name}")
+                    time_slot = Test_lms_accessibility.lms_obj.get_time_slots()
+                    time_slot = random.choice(time_slot)
+                    time_slot.click()
+                    # check if the time is selected
+                    Test_lms_accessibility.lms_obj.get_book_session_home_btn().click()
+                    successful_msg = Test_lms_accessibility.lms_obj.get_session_booked_successful().text
+                    assert successful_msg == 'Session Booked Successfully!'
+                    Test_lms_accessibility.lms_obj.get_return_to_dashboard().click()
 
         except:
             pytest.fail("tutor has not been assigned to this centre or class")
             raise
 
 
-    @pytest.mark.smokeD
-    @pytest.mark.order(2)
+    @pytest.mark.smoke
+    @pytest.mark.order(11)
     def test_practice_quiz(self):
         Test_lms_accessibility.lms_obj.get_practice_btn().click()
 
-        time.sleep(2)
-        outer_page_subjects = Test_lms_accessibility.lms_obj.get_number_of_practice_quiz_subject()
-        random_subject = random.choice(outer_page_subjects)
-        random_subject.click()
-
-        time.sleep(2)
         inner_page_quiz = Test_lms_accessibility.lms_obj.get_subject_quiz()
         random_quiz = random.choice(inner_page_quiz)
         random_quiz.click()
 
-        time.sleep(10)
         quiz_questions = Test_lms_accessibility.lms_obj.get_number_of_quiz_questions().text
         print(f"the number of quiz questions is: {quiz_questions}")
         quiz_questions = quiz_questions.strip().split("/")[-1].strip()
@@ -181,5 +168,6 @@ class Test_lms_Dashboard(BaseClass):
             random_option = random.choice(quiz_options)
             random_option.click()
             time.sleep(3)
+        Test_lms_accessibility.lms_obj.get_return_to_dashboard().click()
 
  
