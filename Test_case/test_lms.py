@@ -112,13 +112,16 @@ class Test_lms_Dashboard(BaseClass):
     @pytest.mark.smoke
     @pytest.mark.order(9)
     def test_resolved_status(self):
-        Test_lms_Dashboard.erplocators.get_resolved_status().click()
-        time.sleep(1)
-        Test_lms_Dashboard.erplocators.get_confirm_btn().click()
-        self.driver.switch_to.window(TestSchedule.lms_tab_handle)
-        Test_lms_accessibility.lms_obj.get_go_back_btn().click()
-        Test_lms_accessibility.lms_obj.get_return_to_dashboard().click()
-        # ADD the assertion step here
+        try:
+            Test_lms_Dashboard.erplocators.get_resolved_status().click()
+            time.sleep(1)
+            Test_lms_Dashboard.erplocators.get_confirm_btn().click()
+            self.driver.switch_to.window(TestSchedule.lms_tab_handle)
+            Test_lms_accessibility.lms_obj.get_go_back_btn().click()
+            Test_lms_accessibility.lms_obj.get_return_to_dashboard().click()
+            # ADD the assertion step here
+        except Exception as e :   
+            raise e
 
     # this method will book one on one meeting with the mentor
     @pytest.mark.smoke

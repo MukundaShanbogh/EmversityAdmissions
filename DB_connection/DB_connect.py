@@ -29,6 +29,13 @@ class Database:
     );"""
         self.cursor.execute(querry)
         return self.cursor.fetchall()
+    
+    def get_freash_lead_numbers(self):
+        querry = "SELECT phone FROM leads WHERE lead_stage IS NULL"
+        self.cursor.execute(querry)
+        result = self.cursor.fetchall()
+        return result
+
 
     def close_connection(self):
         self.cursor.close()
